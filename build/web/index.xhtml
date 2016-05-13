@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" >
+      <h:head> <title>Message List</title> </h:head>
+    <h:body>
+        <h:form>
+            <h:inputText id="inp" value="#{messageController.messageText}" required="true" />
+            <h:commandButton value="Submit" action="#{messageController.addNewMessage}"/>
+        </h:form>
+        <h:dataTable id="messagetable" value="#{messageController.messageList}" var="o">
+            <h:column>
+
+                <h:outputText value="#{o.dateTimeField}" style="font-size: 7px">
+                    <f:convertDateTime dateStyle="medium" type="both" />
+                </h:outputText>
+            </h:column>
+
+            <h:column>
+                <h:outputText value="#{o.text}">
+                </h:outputText>
+            </h:column>
+
+        </h:dataTable>
+
+        <h:form id="hiddenForm" style="display:none">
+            <h:commandButton id="updatemessages">
+                <f:ajax render=":messagetable" />
+            </h:commandButton>
+        </h:form>
+        <script>
+            setInterval(function () {
+                document.getElementById("hiddenForm:updatemessages").click();
+            }, 5000);
+        </script>
+    </h:body>
+
+</html>
+
