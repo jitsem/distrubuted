@@ -6,6 +6,7 @@
 package Ejb;
 
 import Entities.Message;
+import Entities.UserAccount;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.interceptor.Interceptors;
@@ -18,6 +19,7 @@ import javax.persistence.TypedQuery;
  * @author jitse
  */
 import interceptors.ProfanityInterceptor;
+import java.util.ArrayList;
 import java.util.Collections;
 import javax.ejb.Schedule;
 
@@ -31,22 +33,44 @@ public class MessageEJB {
         TypedQuery<Message> query = entityManager.createNamedQuery("Message.findAll", Message.class);
         List<Message> l = query.getResultList();
         Collections.reverse(l);
-        l=l.subList(0, Math.min(l.size(),24));
+        l = l.subList(0, Math.min(l.size(), 24));
         return l;
 
     }
-    
+
     @Schedule(second = "*/10", minute = "*", hour = "*", persistent = false)
     public void stillAwake() {
         System.out.println("I am still awake");
-    } 
+    }
 
     @Interceptors(ProfanityInterceptor.class)
     public Message addNew(Message m) {
+        String[] split = m.getText().split(" ");
+        StringBuilder sb = new StringBuilder();
+        List<UserAccount> ul = new ArrayList<>();
+        for (int i = 0; i < split.length; i++) {
+            boolean tagged =false;
+            if (split[i].startsWith("@")) {
+                split[i] = split[i].substring(1, split[i].length());
+                TypedQuery<UserAccount> query = entityManager.createNamedQuery("UserAccount.findByName", UserAccount.class);
+                query.setParameter("username", split[i]);
+                List<UserAccount> l = query.getResultList();
+                if(!(l.isEmpty())){
+                ul.add(l.get(0));
+                sb.append("<b>");
+                tagged= true;
+                }
+            }
+            sb.append(split[i]);
+            if(tagged){
+                sb.append("</b>");
+            }
+            sb.append(" ");
+        }
+        m.setTaggedUsers(ul);
+        m.setText(sb.toString());
         entityManager.persist(m);
         return m;
     }
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
 }

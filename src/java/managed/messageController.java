@@ -10,7 +10,6 @@ import Entities.Message;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.ejb.Schedule;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 

@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core" >
-      <h:head> <title>Message List</title> </h:head>
+      <h:head> <title>Chat</title> </h:head>
     <h:body>
         <h:form>
             <h:inputText id="inp" value="#{messageController.messageText}" required="true" />
@@ -18,7 +18,7 @@
             </h:column>
 
             <h:column>
-                <h:outputText value="#{o.text}">
+                <h:outputText value="#{o.text}" escape="false">
                 </h:outputText>
             </h:column>
 

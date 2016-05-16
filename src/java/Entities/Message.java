@@ -7,12 +7,19 @@ package Entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -37,7 +44,7 @@ public class Message implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID")
@@ -51,6 +58,45 @@ public class Message implements Serializable {
     @NotNull
     @Column(name = "DATETIME_FIELD")
     private Date dateTimeField;
+    @Lob
+    @Basic(fetch = FetchType.LAZY) // this gets ignored anyway, but it is recommended for blobs
+    @Column(name = "Picture")
+    protected byte[] imageFile;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USERID")
+    private UserAccount owner;
+
+    @ManyToMany
+    @JoinTable(
+            name = "TAGGEDUSERS",
+            joinColumns = @JoinColumn(name = "M_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "U_ID", referencedColumnName = "USERID"))
+    private List<UserAccount> taggedUsers;
+
+    public List<UserAccount> getTaggedUsers() {
+        return taggedUsers;
+    }
+
+    public void setTaggedUsers(List<UserAccount> taggedUsers) {
+        this.taggedUsers = taggedUsers;
+    }
+
+    public byte[] getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(byte[] imageFile) {
+        this.imageFile = imageFile;
+    }
+
+    public UserAccount getOwner() {
+        return owner;
+    }
+
+    public void setOwner(UserAccount owner) {
+        this.owner = owner;
+    }
 
     public Date getDateTimeField() {
         return dateTimeField;
@@ -61,9 +107,8 @@ public class Message implements Serializable {
     }
 
     public Message() {
-        this.dateTimeField=new Date();
+        this.dateTimeField = new Date();
     }
-   
 
     public Integer getId() {
         return id;
@@ -105,5 +150,5 @@ public class Message implements Serializable {
     public String toString() {
         return this.getText();
     }
-    
+
 }

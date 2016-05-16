@@ -3,14 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/jitse/NetBeansProjects/ProjectDistrubuted/web/WEB-INF/web.xml</file>
-            <file>file:/home/jitse/NetBeansProjects/ProjectDistrubuted/src/java/Entities/Message.java</file>
-            <file>file:/home/jitse/NetBeansProjects/ProjectDistrubuted/src/conf/persistence.xml</file>
-            <file>file:/home/jitse/NetBeansProjects/ProjectDistrubuted/src/java/Ejb/MessageEJB.java</file>
-            <file>file:/home/jitse/NetBeansProjects/ProjectDistrubuted/src/conf/MANIFEST.MF</file>
-            <file>file:/home/jitse/NetBeansProjects/ProjectDistrubuted/src/java/interceptors/ProfanityInterceptor.java</file>
-            <file>file:/home/jitse/NetBeansProjects/ProjectDistrubuted/src/java/managed/messageController.java</file>
-            <file>file:/home/jitse/NetBeansProjects/ProjectDistrubuted/web/index.xhtml</file>
+            <file>file:/home/jitse/NetBeansProjects/distrubuted/web/WEB-INF/glassfish-resources.xml</file>
+            <file>file:/home/jitse/NetBeansProjects/distrubuted/web/index.xhtml</file>
+            <file>file:/home/jitse/NetBeansProjects/distrubuted/src/java/Entities/Message.java</file>
+            <file>file:/home/jitse/NetBeansProjects/distrubuted/src/java/managed/messageController.java</file>
+            <file>file:/home/jitse/NetBeansProjects/distrubuted/src/java/Ejb/MessageEJB.java</file>
+            <file>file:/home/jitse/NetBeansProjects/distrubuted/src/conf/persistence.xml</file>
+            <file>file:/home/jitse/NetBeansProjects/distrubuted/web/WEB-INF/web.xml</file>
         </group>
     </open-files>
 </project-private>
