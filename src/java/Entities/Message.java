@@ -150,5 +150,8 @@ public class Message implements Serializable {
     public String toString() {
         return this.getText();
     }
+    public boolean hasPic(){
+        return imageFile != null;
+    }
 
 }
