@@ -8,18 +8,23 @@ package managed;
 import Ejb.MessageEJB;
 import Entities.Message;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.imageio.ImageIO;
 import javax.servlet.http.Part;
 
 /**
  *
  * @author jitse
  */
+@ManagedBean
 @Named(value = "messageController")
 @RequestScoped
 public class messageController {
@@ -79,11 +84,18 @@ public class messageController {
                 int bytesRead;
                 ByteArrayOutputStream output = new ByteArrayOutputStream();
                 InputStream input = picture.getInputStream();
+                if (input.available() < 1000000) {
+                    
+                
                 while ((bytesRead = input.read(buffer)) != -1) {
                     output.write(buffer, 0, bytesRead);
                 }
                 byte[] image = output.toByteArray();
                 message.setImageFile(image);
+                }else{
+                    message.setText(message.getText().concat(" (PICTURE TO BIG)"));
+                }
+                
             } catch (Exception e) {
             }
 
@@ -93,6 +105,5 @@ public class messageController {
         messageList = messageEJB.getMessages();
         return "index.xhtml";
     }
-    
 
 }
