@@ -7,6 +7,7 @@ package Ejb;
 
 import Entities.UserAccount;
 import java.util.ArrayList;
+import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 
 /**
@@ -18,9 +19,22 @@ public class CounterEJB {
 
     private int totalMessages=0;
     private ArrayList<UserAccount> users = new ArrayList<>();
+    private int minutesOnline;
+
+    public ArrayList<UserAccount> getUsers() {
+        return users;
+    }
+
+    public int getMinutesOnline() {
+        return minutesOnline;
+    }
 
    
-    public int getCurrentHits(){
+    public int getCurrentMessages(){
+        return totalMessages;
+    }
+    
+    public int increaseCurrentMessages(){
         return totalMessages++;
     }
     
@@ -35,4 +49,11 @@ public class CounterEJB {
     public void removeUser(UserAccount u){
         users.remove(u);
     }
+    
+    @Schedule(minute = "*", hour = "*", persistent = false)
+    public void stillAwake() {
+        System.out.println("I am still awake");
+        minutesOnline++;
+    }
+
 }
