@@ -81,11 +81,15 @@ public class messageController {
                 int bytesRead;
                 ByteArrayOutputStream output = new ByteArrayOutputStream();
                 InputStream input = picture.getInputStream();
-                while ((bytesRead = input.read(buffer)) != -1) {
-                    output.write(buffer, 0, bytesRead);
+                if (input.available() < 1000000) {
+                    while ((bytesRead = input.read(buffer)) != -1) {
+                        output.write(buffer, 0, bytesRead);
+                    }
+                    byte[] image = output.toByteArray();
+                    message.setImageFile(image);
+                } else {
+                    message.setText(message.getText().concat(" (PICTURE TO BIG)"));
                 }
-                byte[] image = output.toByteArray();
-                message.setImageFile(image);
             } catch (Exception e) {
             }
 
@@ -95,6 +99,4 @@ public class messageController {
         messageList = messageEJB.getMessages();
         return "index.xhtml";
     }
-    
-
 }

@@ -10,4 +10,10 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+<<<<<<< HEAD
 /dist/
+=======
+/build/
+/dist/
+!/web/WEB-INF/lib/omnifaces-2.3.jar
+>>>>>>> 5231e8b031c5dd76e20c11d07e22df1fb5d77506
