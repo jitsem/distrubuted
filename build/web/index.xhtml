@@ -2,12 +2,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core" >
-      <h:head> <title>Message List</title> </h:head>
+      xmlns:f="http://xmlns.jcp.org/jsf/core" 
+      xmlns:o="http://omnifaces.org/ui">
+    <h:head> <title>Chat</title> </h:head>
     <h:body>
-        <h:form>
+        <h:form enctype="multipart/form-data">
             <h:inputText id="inp" value="#{messageController.messageText}" required="true" />
+            <br></br>
+            <h:inputFile value="#{messageController.picture}"/>
+            <br></br>
             <h:commandButton value="Submit" action="#{messageController.addNewMessage}"/>
+            
         </h:form>
         <h:dataTable id="messagetable" value="#{messageController.messageList}" var="o">
             <h:column>
@@ -18,11 +23,15 @@
             </h:column>
 
             <h:column>
-                <h:outputText value="#{o.text}">
+                <h:outputText value="#{o.text}" escape="false">
                 </h:outputText>
+            </h:column>
+            <h:column>
+                <o:graphicImage value="#{o.imageFile}" dataURI="true" width =" 150" rendered="#{not empty o.imageFile}"/>   
             </h:column>
 
         </h:dataTable>
+        <h:outputText value="There have been a total of #{countController.messageCount} messages" style="font-size: 7px"></h:outputText>
 
         <h:form id="hiddenForm" style="display:none">
             <h:commandButton id="updatemessages">
