@@ -8,4 +8,9 @@
       <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
+  <persistence-unit name="jdbcRealmPU" transaction-type="JTA">
+    <jta-data-source>TestProj</jta-data-source>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties/>
+  </persistence-unit>
 </persistence>
