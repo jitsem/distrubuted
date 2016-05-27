@@ -84,9 +84,7 @@ public class MessageController {
                 int bytesRead;
                 ByteArrayOutputStream output = new ByteArrayOutputStream();
                 InputStream input = picture.getInputStream();
-                if (input.available() < 1000000) {
-                    
-                
+                if (input.available() < 1000000) {                
                 while ((bytesRead = input.read(buffer)) != -1) {
                     output.write(buffer, 0, bytesRead);
                 }
@@ -94,8 +92,8 @@ public class MessageController {
                 message.setImageFile(image);
                 }else{
                     message.setText(message.getText().concat(" (PICTURE TOO BIG!)"));
+
                 }
-                
             } catch (Exception e) {
             }
 
@@ -105,5 +103,4 @@ public class MessageController {
         messageList = messageEJB.getMessages();
         return "index.xhtml";
     }
-
 }
