@@ -3,20 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Ejb;
-
-import javax.ejb.Singleton;
+package enums;
 
 /**
  *
  * @author jitse
  */
-@Singleton
-public class MessageCounter {
-
-    private int totalMessages=0;
+public enum Feelings {
+    NONE,
+    HAPPY,
+    SAD,
+    ANGRY,
+    CONFUSED
     
-    public int getCurrentHits(){
-        return totalMessages++;
-    }
 }

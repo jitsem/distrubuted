@@ -5,19 +5,17 @@
  */
 package managed;
 
+import Ejb.CounterEJB;
 import Ejb.MessageEJB;
 import Entities.Message;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import javax.imageio.ImageIO;
 import javax.servlet.http.Part;
 
 /**
@@ -25,16 +23,18 @@ import javax.servlet.http.Part;
  * @author jitse
  */
 @ManagedBean
-@Named(value = "messageController")
+@Named(value = "MessageController")
 @RequestScoped
-public class messageController {
+public class MessageController {
 
     /**
      * Creates a new instance of messageController
      */
-    public messageController() {
+    public MessageController() {
     }
 
+    @EJB
+    private CounterEJB counter;
     @EJB
     private MessageEJB messageEJB;
     private String messageText;
@@ -93,14 +93,14 @@ public class messageController {
                 byte[] image = output.toByteArray();
                 message.setImageFile(image);
                 }else{
-                    message.setText(message.getText().concat(" (PICTURE TO BIG)"));
+                    message.setText(message.getText().concat(" (PICTURE TOO BIG!)"));
                 }
                 
             } catch (Exception e) {
             }
 
         }
-
+        counter.increaseCurrentMessages();
         message = messageEJB.addNew(message);
         messageList = messageEJB.getMessages();
         return "index.xhtml";

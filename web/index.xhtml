@@ -7,17 +7,17 @@
     <h:head> <title>Chat</title> </h:head>
     <h:body>
         <h:form enctype="multipart/form-data">
-            <h:inputText id="inp" value="#{messageController.messageText}" required="true" />
+            <h:inputText id="inp" value="#{MessageController.messageText}" required="true" />
             <br></br>
-            <h:inputFile value="#{messageController.picture}"/>
+            <h:inputFile value="#{MessageController.picture}"/>
             <br></br>
-            <h:commandButton value="Submit" action="#{messageController.addNewMessage}"/>
+            <h:commandButton value="Submit" action="#{MessageController.addNewMessage}"/>
             
         </h:form>
-        <h:dataTable id="messagetable" value="#{messageController.messageList}" var="o">
+        <h:dataTable id="messagetable" value="#{MessageController.messageList}" var="o">
             <h:column>
 
-                <h:outputText value="#{o.dateTimeField}" style="font-size: 7px">
+                <h:outputText value="on #{o.info.dateTimeField}" style="font-size: 7px">
                     <f:convertDateTime dateStyle="medium" type="both" />
                 </h:outputText>
             </h:column>
@@ -31,11 +31,12 @@
             </h:column>
 
         </h:dataTable>
-        <h:outputText value="There have been a total of #{countController.messageCount} messages" style="font-size: 7px"></h:outputText>
+        <h:outputText id="statusmessage" value="There have been a total of #{StatusController.messageCount} messages within #{StatusController.upTime} minutes" style="font-size: 7px"></h:outputText>
 
         <h:form id="hiddenForm" style="display:none">
             <h:commandButton id="updatemessages">
                 <f:ajax render=":messagetable" />
+                <f:ajax render=":statusmessage" />                
             </h:commandButton>
         </h:form>
         <script>

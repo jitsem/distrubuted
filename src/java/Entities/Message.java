@@ -5,11 +5,12 @@
  */
 package Entities;
 
+
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -23,11 +24,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -35,7 +33,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "MESSAGE")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Message.findAll", query = "SELECT m FROM Message m"),
     @NamedQuery(name = "Message.findById", query = "SELECT m FROM Message m WHERE m.id = :id"),
@@ -53,11 +50,10 @@ public class Message implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "TEXT")
     private String text;
-    @Basic(optional = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @NotNull
-    @Column(name = "DATETIME_FIELD")
-    private Date dateTimeField;
+    
+    @Embedded
+    private ContextInfo info = new ContextInfo();
+
     @Lob
     @Basic(fetch = FetchType.LAZY) // this gets ignored anyway, but it is recommended for blobs
     @Column(name = "Picture")
@@ -72,6 +68,7 @@ public class Message implements Serializable {
             name = "TAGGEDUSERS",
             joinColumns = @JoinColumn(name = "M_ID", referencedColumnName = "ID"),
             inverseJoinColumns = @JoinColumn(name = "U_ID", referencedColumnName = "USERID"))
+    
     private List<UserAccount> taggedUsers;
 
     public List<UserAccount> getTaggedUsers() {
@@ -98,16 +95,12 @@ public class Message implements Serializable {
         this.owner = owner;
     }
 
-    public Date getDateTimeField() {
-        return dateTimeField;
+    public ContextInfo getInfo() {
+        return info;
     }
 
-    public void setDateTimeField(Date dateTimeField) {
-        this.dateTimeField = dateTimeField;
-    }
-
-    public Message() {
-        this.dateTimeField = new Date();
+    public void setInfo(ContextInfo info) {
+        this.info = info;
     }
 
     public Integer getId() {

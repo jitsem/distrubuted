@@ -21,7 +21,6 @@ import javax.persistence.TypedQuery;
 import interceptors.ProfanityInterceptor;
 import java.util.ArrayList;
 import java.util.Collections;
-import javax.ejb.Schedule;
 
 @Stateless
 public class MessageEJB {
@@ -36,11 +35,6 @@ public class MessageEJB {
         l = l.subList(0, Math.min(l.size(), 24));
         return l;
 
-    }
-
-    @Schedule(second = "*/10", minute = "*", hour = "*", persistent = false)
-    public void stillAwake() {
-        System.out.println("I am still awake");
     }
 
     @Interceptors(ProfanityInterceptor.class)
